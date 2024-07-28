@@ -1,0 +1,2 @@
+# liberty-employee-service
+DUMMY MICROSERVICIO IMPLEMENTADO EN: IBM LIBERTY.
