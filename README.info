@@ -1,0 +1,81 @@
+
+********************************************************
+************* [DESPLEGAR - MICROSERVICIO] **************
+********************************************************
+- Iniciar SERVER:
+  $ cd openliberty-employee-service
+  $ mvn liberty:run
+
+- Iniciar SERVER (Modo DESARROLLADOR):
+  $ cd openliberty-employee-service
+  $ mvn liberty:dev
+
+- Apagar SERVER:
+  $ cd openliberty-employee-service
+  $ mvn liberty:stop
+  
+
+********************************************************
+********************* [TEST LOCAL] *********************
+********************************************************
+API (YamelFile): 
+http://localhost:9080/openapi
+http://localhost:9080/openapi/ui/
+
+OPERACION => 'getEmpleados': 
+http://localhost:9080/openliberty-employee-service/ibm/employeeService/getEmpleados
+
+OPERACION => 'getEmpleadosPorId': 
+http://localhost:9080/openliberty-employee-service/ibm/employeeService/getEmpleadosPorId/1
+
+
+********************************************************
+******************** [TEST DOCKER] *********************
+********************************************************
+$ docker build -t openliberty-employee-service .
+$ docker run -i --rm -p 9080:9080 openliberty-employee-service
+$ curl http://localhost:9080/openapi
+$ curl http://localhost:9080/openapi/ui/
+$ curl http://localhost:9080/openliberty-employee-service/ibm/employeeService/getEmpleados
+$ curl http://localhost:9080/openliberty-employee-service/ibm/employeeService/getEmpleadosPorId/1
+
+
+********************************************************
+******************* [TEST OPENSHIFT] *******************
+********************************************************
+Debe de EXISTIR la imagen del Microservicio en DockerHub: [docker.io/maktup/openliberty-employee-service:latest]
+
+$ oc create ns dummy-liberty
+$ oc delete imagestream.image.openshift.io openliberty-employee-service -n dummy-liberty
+$ oc import-image openliberty-employee-service --from=docker.io/maktup/openliberty-employee-service:latest --confirm -n dummy-liberty
+$ oc get imagestream.image.openshift.io -n dummy-liberty
+
+
+El IMAGESTREAM obtenido es: [image-registry.openshift-image-registry.svc:5000/dummy-liberty/openliberty-employee-service]
+
+apiVersion: apps.openliberty.io/v1beta2
+kind: OpenLibertyApplication
+metadata:
+  name: openliberty-employee-service
+  namespace: dummy-liberty
+spec:
+  applicationImage: image-registry.openshift-image-registry.svc:5000/dummy-liberty/openliberty-employee-service
+  expose: true
+  replicas: 1
+
+$ curl http://openliberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/openapi
+$ curl http://openliberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/openapi/ui/
+$ curl http://openliberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/openliberty-employee-service/ibm/employeeService/getEmpleados
+$ curl http://openliberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/openliberty-employee-service/ibm/employeeService/getEmpleadosPorId/1
+      
+
+********************************************************
+********************* [DOCKER-HUB] *********************
+********************************************************
+DockerHub asociado e INTEGRADO: [https://hub.docker.com/repository/docker/maktup/openliberty-employee-service]
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+En archivo de CONFIGURACIÓN está en la RUTA:   src\main\liberty\config\server.xml
+
