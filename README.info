@@ -3,15 +3,15 @@
 ************* [DESPLEGAR - MICROSERVICIO] **************
 ********************************************************
 - Iniciar SERVER:
-  $ cd openliberty-employee-service
+  $ cd liberty-employee-service
   $ mvn liberty:run
 
 - Iniciar SERVER (Modo DESARROLLADOR):
-  $ cd openliberty-employee-service
+  $ cd liberty-employee-service
   $ mvn liberty:dev
 
 - Apagar SERVER:
-  $ cd openliberty-employee-service
+  $ cd liberty-employee-service
   $ mvn liberty:stop
   
 
@@ -32,12 +32,12 @@ http://localhost:9080/openliberty-employee-service/ibm/employeeService/getEmplea
 ********************************************************
 ******************** [TEST DOCKER] *********************
 ********************************************************
-$ docker build -t openliberty-employee-service .
-$ docker run -i --rm -p 9080:9080 openliberty-employee-service
+$ docker build -t liberty-employee-service .
+$ docker run -i --rm -p 9080:9080 liberty-employee-service
 $ curl http://localhost:9080/openapi
 $ curl http://localhost:9080/openapi/ui/
-$ curl http://localhost:9080/openliberty-employee-service/ibm/employeeService/getEmpleados
-$ curl http://localhost:9080/openliberty-employee-service/ibm/employeeService/getEmpleadosPorId/1
+$ curl http://localhost:9080/liberty-employee-service/ibm/employeeService/getEmpleados
+$ curl http://localhost:9080/liberty-employee-service/ibm/employeeService/getEmpleadosPorId/1
 
 
 ********************************************************
@@ -46,8 +46,8 @@ $ curl http://localhost:9080/openliberty-employee-service/ibm/employeeService/ge
 Debe de EXISTIR la imagen del Microservicio en DockerHub: [docker.io/maktup/openliberty-employee-service:latest]
 
 $ oc create ns dummy-liberty
-$ oc delete imagestream.image.openshift.io openliberty-employee-service -n dummy-liberty
-$ oc import-image openliberty-employee-service --from=docker.io/maktup/openliberty-employee-service:latest --confirm -n dummy-liberty
+$ oc delete imagestream.image.openshift.io liberty-employee-service -n dummy-liberty
+$ oc import-image liberty-employee-service --from=docker.io/maktup/liberty-employee-service:latest --confirm -n dummy-liberty
 $ oc get imagestream.image.openshift.io -n dummy-liberty
 
 

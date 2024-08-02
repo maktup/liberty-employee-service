@@ -1,9 +1,0 @@
-# DOCKERFILE para escenario de BUILD el proyecto con MAVEN.
-FROM icr.io/appcafe/open-liberty:kernel-slim-java8-openj9-ubi
-
-COPY /src/main/liberty/config/server.xml /config/
-RUN features.sh
-COPY /target/*.war /config/apps/
-EXPOSE 9080
-EXPOSE 9443
-RUN configure.sh
