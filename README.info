@@ -1,7 +1,7 @@
 
-********************************************************
-************* [DESPLEGAR - MICROSERVICIO] **************
-********************************************************
+***************************************************************************
+************* [DESPLEGAR - MICROSERVICIO - (LINEA COMANDOS)] **************
+***************************************************************************
 - Iniciar SERVER:
   $ cd liberty-employee-service
   $ mvn liberty:run
@@ -15,67 +15,128 @@
   $ mvn liberty:stop
   
 
-********************************************************
-********************* [TEST LOCAL] *********************
-********************************************************
-API (YamelFile): 
-http://localhost:9080/openapi
-http://localhost:9080/openapi/ui/
-
-OPERACION => 'getEmpleados': 
-http://localhost:9080/openliberty-employee-service/ibm/employeeService/getEmpleados
-
-OPERACION => 'getEmpleadosPorId': 
-http://localhost:9080/openliberty-employee-service/ibm/employeeService/getEmpleadosPorId/1
-
-
-********************************************************
-******************** [TEST DOCKER] *********************
-********************************************************
-$ docker build -t liberty-employee-service .
-$ docker run -i --rm -p 9080:9080 liberty-employee-service
-$ curl http://localhost:9080/openapi
-$ curl http://localhost:9080/openapi/ui/
+//LINEA DE COMANDOS:
 $ curl http://localhost:9080/liberty-employee-service/ibm/employeeService/getEmpleados
 $ curl http://localhost:9080/liberty-employee-service/ibm/employeeService/getEmpleadosPorId/1
 
-
-********************************************************
-******************* [TEST OPENSHIFT] *******************
-********************************************************
-Debe de EXISTIR la imagen del Microservicio en DockerHub: [docker.io/maktup/openliberty-employee-service:latest]
-
-$ oc create ns dummy-liberty
-$ oc delete imagestream.image.openshift.io liberty-employee-service -n dummy-liberty
-$ oc import-image liberty-employee-service --from=docker.io/maktup/liberty-employee-service:latest --confirm -n dummy-liberty
-$ oc get imagestream.image.openshift.io -n dummy-liberty
+//NAVEGADOR:
+https://localhost:9080/ibm/api
+http://localhost:9080/health
+https://localhost:9080/metrics
+http://localhost:9080/openapi
+http://localhost:9080/openapi/ui
 
 
-El IMAGESTREAM obtenido es: [image-registry.openshift-image-registry.svc:5000/dummy-liberty/openliberty-employee-service]
 
-apiVersion: apps.openliberty.io/v1beta2
+***************************************************************************
+***************** [DESPLEGAR - MICROSERVICIO - (ECLIPSE)] *****************
+***************************************************************************
+
+Desde ECLIPSE apoyarse en el PLUGIN de LIBERTY.
+Ejecutar sobre el PROYECTO: "liberty start" (Se creará un TARGET-RUNTIME de LIBERTY)
+
+
+//LINEA DE COMANDOS:
+$ curl http://localhost:9080/liberty-employee-service/ibm/employeeService/getEmpleados
+$ curl http://localhost:9080/liberty-employee-service/ibm/employeeService/getEmpleadosPorId/1
+
+//NAVEGADOR:
+https://localhost:9080/ibm/api
+http://localhost:9080/health
+https://localhost:9080/metrics
+http://localhost:9080/openapi
+http://localhost:9080/openapi/ui
+
+ 
+
+***************************************************************************
+************************** [DESPLEGAR - DOCKER] ***************************
+***************************************************************************
+$ docker build -t liberty-employee-service .
+$ docker run -i --rm -p 9080:9080 liberty-employee-service
+
+//LINEA DE COMANDOS:
+$ curl http://localhost:9080/liberty-employee-service/ibm/employeeService/getEmpleados
+$ curl http://localhost:9080/liberty-employee-service/ibm/employeeService/getEmpleadosPorId/1
+
+//NAVEGADOR:
+https://localhost:9080/ibm/api
+http://localhost:9080/health
+https://localhost:9443/metrics
+http://localhost:9080/openapi
+http://localhost:9080/openapi/ui
+
+
+
+***************************************************************************
+************************* [DESPLEGAR - OPENSHIFT] *************************
+***************************************************************************
+Debe de EXISTIR la imagen del MICROSERVICIO en DockerHub: [docker.io/maktup/liberty-employee-service:latest]
+
+$ oc create ns cp4apps
+$ oc delete imagestream.image.openshift.io liberty-employee-service -n cp4apps
+$ oc new-build --name=liberty-employee-service --strategy=docker https://github.com/maktup/liberty-employee-service.git -n cp4apps
+$ oc get all -n cp4apps
+$ oc get imagestream.image.openshift.io -n cp4apps
+
+
+El IMAGESTREAM obtenido es: [image-registry.openshift-image-registry.svc:5000/cp4apps/liberty-employee-service]
+
+Las INSTANCIAS para crea en OPENSHIFT por medio de los OPERATORs pueden ser:
+
+apiVersion: liberty.websphere.ibm.com/v1
+kind: WebSphereLibertyApplication
+metadata:
+  name: liberty-employee-service-01
+  namespace: cp4apps
+spec:
+  license:
+    accept: true
+    edition: IBM WebSphere Application Server
+    productEntitlementSource: Standalone
+  expose: true
+  resources: {}
+  applicationImage: image-registry.openshift-image-registry.svc:5000/cp4apps/liberty-employee-service
+  service:
+    port: 9443
+    type: ClusterIP
+  manageTLS: true
+  pullPolicy: IfNotPresent
+  serviceAccount:
+    mountToken: true
+  replicas: 1
+  applicationName: liberty-employee-service
+
+---
+
+apiVersion: apps.openliberty.io/v1
 kind: OpenLibertyApplication
 metadata:
-  name: openliberty-employee-service
-  namespace: dummy-liberty
+  name: liberty-employee-service-02
+  namespace: cp4apps
 spec:
-  applicationImage: image-registry.openshift-image-registry.svc:5000/dummy-liberty/openliberty-employee-service
+  applicationImage: image-registry.openshift-image-registry.svc:5000/cp4apps/liberty-employee-service
   expose: true
+  manageTLS: true
   replicas: 1
+  serviceAccount:
+    mountToken: true
+ 
+    
+//LINEA DE COMANDOS:
+$ curl http://liberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/liberty-employee-service/ibm/employeeService/getEmpleados
+$ curl http://liberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/liberty-employee-service/ibm/employeeService/getEmpleadosPorId/1
 
-$ curl http://openliberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/openapi
-$ curl http://openliberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/openapi/ui/
-$ curl http://openliberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/openliberty-employee-service/ibm/employeeService/getEmpleados
-$ curl http://openliberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/openliberty-employee-service/ibm/employeeService/getEmpleadosPorId/1
-      
+//NAVEGADOR:
+http://liberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/ibm/api
+http://liberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/health
+http://liberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/metrics
+http://liberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/openapi
+http://liberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac64511f874a64b9b-0000.us-south.containers.appdomain.cloud/openapi/ui
 
-********************************************************
-********************* [DOCKER-HUB] *********************
-********************************************************
-DockerHub asociado e INTEGRADO: [https://hub.docker.com/repository/docker/maktup/openliberty-employee-service]
 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
-En archivo de CONFIGURACIÓN está en la RUTA:   src\main\liberty\config\server.xml
+En archivo de CONFIGURACIÓN está en la RUTA:  src\main\liberty\config\server.xml
 
