@@ -74,8 +74,10 @@ http://localhost:9080/openapi/ui
 Debe de EXISTIR la imagen del MICROSERVICIO en DockerHub: [docker.io/maktup/liberty-employee-service:latest]
 
 $ oc create ns cp4apps
-$ oc delete imagestream.image.openshift.io liberty-employee-service -n cp4apps
-$ oc new-build --name=liberty-employee-service --strategy=docker https://github.com/maktup/liberty-employee-service.git -n cp4apps
+$ oc delete imagestream liberty-employee-service -n cp4apps
+$ oc delete imagestream open-liberty -n cp4apps
+$ oc delete buildconfigs liberty-employee-service -n cp4apps
+$ oc new-build --name=liberty-employee-service --strategy=docker https://github.com/maktup/liberty-employee-service.git -n cp4apps  
 $ oc get all -n cp4apps
 $ oc get imagestream.image.openshift.io -n cp4apps
 
