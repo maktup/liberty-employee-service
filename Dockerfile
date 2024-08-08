@@ -15,3 +15,4 @@ COPY --from=build /usr/src/app/target/*.war /config/apps/
 EXPOSE 9080
 EXPOSE 9443
 RUN configure.sh
+ 

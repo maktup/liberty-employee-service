@@ -1,37 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<server description="OpenLiberty Server" >
-	
-	<featureManager>
+<server description="OpenLiberty Server">
+ 
+ 	<featureManager>
 	   <feature>jaxrs-2.1</feature>
 	   <feature>jsonp-1.1</feature>
 	   <feature>cdi-2.0</feature>
 	   <feature>mpOpenTracing-2.0</feature>  
        <feature>webProfile-8.0</feature>
        <feature>microProfile-4.0</feature>
-	</featureManager>	
+	</featureManager>   	
+
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443" />
+     
+    <webApplication id="liberty-employee-service" name="liberty-employee-service" location="liberty-employee-service.war" />
   
-    <keyStore password="" /> 
- 
  	<basicRegistry id="basic" realm="BasicRealm" > 
-	    <user name="cguerra" password="12345678" /> 
+	   <user name="cguerra" password="12345678" /> 
 	
-	    <group name="managers" >
-	      <member name="cguerra"  />
-	    </group>
+	   <group name="managers" >
+	      <member name="cguerra" />
+	   </group>
 	</basicRegistry>
 	
 	<administrator-role>
 	    <group>managers</group>
-	</administrator-role>
- 
-    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443" />
- 
-    <applicationManager autoExpand="true" />
- 
-    <webApplication id="liberty-employee-service" name="liberty-employee-service" location="liberty-employee-service.war" > 
-    </webApplication>
- 
-    <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
- 
+	</administrator-role>   
+  
 </server>
