@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<server description="OpenLiberty Server">
- 
+<server description="OpenLiberty Server" >
+
  	<featureManager>
 	   <feature>jaxrs-2.1</feature>
 	   <feature>jsonp-1.1</feature>
 	   <feature>cdi-2.0</feature>
 	   <feature>mpOpenTracing-2.0</feature>  
        <feature>webProfile-8.0</feature>
-       <feature>microProfile-4.0</feature>
-	</featureManager>   	
-
+       <feature>microProfile-4.0</feature>  
+       <feature>appSecurity-3.0</feature> 
+	</featureManager>    
+  
     <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443" />
      
     <webApplication id="liberty-employee-service" name="liberty-employee-service" location="liberty-employee-service.war" />
-  
+    
+    
+    <!-- ***** BLOQUE PARA MANEJO SEGURIDAD: [BASIC-AUTH], JUNTO CON TODO: 'web.xml'' (sino ELIMINAR ambas cosas) *****-->
  	<basicRegistry id="basic" realm="BasicRealm" > 
 	   <user name="cguerra" password="12345678" /> 
 	
@@ -26,5 +29,6 @@
 	<administrator-role>
 	    <group>managers</group>
 	</administrator-role>   
-  
+    <!-- ***** BLOQUE PARA MANEJO SEGURIDAD: [BASIC-AUTH], JUNTO CON TODO: 'web.xml'' (sino ELIMINAR ambas cosas) *****--> 
+    
 </server>

@@ -22,7 +22,7 @@ import pe.com.ibm.csm.service.EmployeeService;
  **/
  @Path( "employeeService" )
  public class EmployeeServiceImp implements EmployeeService{
-	
+	  
 	   /**
 	    * getEmpleados
 	    * @param  Employee objEmp
@@ -30,7 +30,7 @@ import pe.com.ibm.csm.service.EmployeeService;
 	    **/ 
 	    @GET   
 	    @Path( "/getEmpleados" )
-	    @Produces( MediaType.APPLICATION_JSON )     
+	    @Produces( MediaType.APPLICATION_JSON )         
 	    @APIResponse(
 	            responseCode = "404",
 	            description  = "Error en el envio de datos",
@@ -51,20 +51,27 @@ import pe.com.ibm.csm.service.EmployeeService;
 			   try{
 				   objEmp = new Employee();
 				   objEmp.setId( 1 );
-				   objEmp.setNombres( "IVAN ARTURO" );
-				   objEmp.setApellidos( "DARIO SILVA" );
+				   objEmp.setNombres( "CESAR ARTURO" );
+				   objEmp.setApellidos( "LLANOS SILVA" );
 				   objEmp.setDni( 42814133 );
-				   objEmp.setEdad( 35 );
+				   objEmp.setEdad( 30 );
 				   listaEmp.add( objEmp );
 					
 				   objEmp = new Employee();
 				   objEmp.setId( 2 );
-				   objEmp.setNombres( "PAOLO MARIO" );
-				   objEmp.setApellidos( "VERA TUDELA" );
+				   objEmp.setNombres( "LUIS ARMANDO" );
+				   objEmp.setApellidos( "FIGO TUDELA" );
 				   objEmp.setDni( 41816133 );
-				   objEmp.setEdad( 39 );
+				   objEmp.setEdad( 43 );
 				   listaEmp.add( objEmp );
-					
+				   
+				   objEmp = new Employee();
+				   objEmp.setId( 3 );
+				   objEmp.setNombres( "IVAN ARTURO" );
+				   objEmp.setApellidos( "MUELA MALDONADO" );
+				   objEmp.setDni( 35561313 );
+				   objEmp.setEdad( 44 );
+				   listaEmp.add( objEmp );					
 			   }
 			   catch( Exception e ){
 			          e.printStackTrace();
@@ -108,6 +115,10 @@ import pe.com.ibm.csm.service.EmployeeService;
 				   objEmp.setApellidos( "CALAGUA DIAS" );
 				   objEmp.setDni( 42814133 );
 				   objEmp.setEdad( 35 );			
+				   
+				   //logica de negocio: 
+                   
+				   
 			   }
 			   catch( Exception e ){
 					  e.printStackTrace();

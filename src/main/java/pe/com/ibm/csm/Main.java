@@ -8,7 +8,7 @@ import javax.ws.rs.core.Application;
  * @author cguerra
  **/
  @ApplicationPath( "/ibm" )
- public class Main extends Application{
+ public class Main extends Application{ 
  
  }
 

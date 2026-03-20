@@ -11,14 +11,14 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
  **/
  @Schema( name = "ListEmployee", description = "POJO que representa una lista de la entidad Empleado." )
  @XmlRootElement( name = "ListEmployee" ) 
- public class ListEmployee{
+ public class ListEmployee{   
 
 	    @Schema( required = true )
-	    @XmlElement
+	    @XmlElement  
 	    private List<Employee> listEmployees;
 	
 	    public List<Employee> getListEmployees(){
-		 	  return listEmployees;
+		 	   return listEmployees;
 	    }
 	
 	    public void setListEmployees( List<Employee> listEmployees ){

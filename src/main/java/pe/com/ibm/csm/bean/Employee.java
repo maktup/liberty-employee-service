@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Employee
  * @author cguerra
- **/
+ **/ 
  @XmlRootElement( name = "Employee" ) 
  @Schema( name = "Employee", description = "POJO que representa la entidad Empleado." )
  public class Employee implements Serializable{

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://xmlns.jcp.org/xml/ns/javaee
+        http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+    version="4.0">
+
+    <!-- ***** BLOQUE PARA MANEJO SEGURIDAD: [BASIC-AUTH], sino ELIMINAR contenido *****-->
+    
+    <!-- Protege TODOS los endpoints JAX-RS bajo /ibm -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Protected IBM REST API</web-resource-name>
+            <url-pattern>/ibm/*</url-pattern>
+        </web-resource-collection>
+
+        <auth-constraint>
+            <role-name>managers</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <!-- Configuración de AUTENTICACIÓN -->
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>BasicRealm</realm-name>
+    </login-config>
+
+    <!-- ROL lógico usado por la aplicación -->
+    <security-role>
+        <role-name>managers</role-name>
+    </security-role>
+    
+    <!-- ***** BLOQUE PARA MANEJO SEGURIDAD: [BASIC-AUTH], sino ELIMINAR contenido *****-->
+    
+</web-app>
+
