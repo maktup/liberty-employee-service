@@ -52,6 +52,7 @@ http://localhost:9080/openapi/ui
 ***************************************************************************
 ************************** [DESPLEGAR - DOCKER] ***************************
 ***************************************************************************
+$ alias docker=podman
 $ docker build -t liberty-employee-service .
 $ docker run -i --rm -p 9080:9080 liberty-employee-service
 
@@ -141,4 +142,40 @@ http://liberty-employee-service-dummy-liberty.cluster-cla-crga-ccc03eca20d26e6ac
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
 En archivo de CONFIGURACIÓN está en la RUTA:  src\main\liberty\config\server.xml
+
+
+
+********************************************************************************************************************************************************************************************************
+*************************************************************************** [ENTERPRISE APLICATION SERVICE FOR JAVA (EASeJ)] ***************************************************************************
+******************************************************************************************************************************************************************************************************** 
+
+Para el DESPLIEGUE es necesario CONFIGURAR:
+
+
+I. TENER UNA LICENCIA & ENTORNO DE: 'ENTERPRISE APLICATION SERVICE FOR JAVA (EASeJ)' EN IBM-CLOUD.
+
+II. CREAR EN GITHUB LO SIGUIENTE:
+    * NUEVA ORGANIZACIÓN:             Aquí se guardarán los NUEVOS proyectos de LIBERTY que se creen.  
+    
+    * REPOSITORIO PARA FUENTES:       El NOMBRE en este caso ha sido: 'dummy-liberty-EASeJ-source'
+                                      REPOSITORIO para ubicar las FUENTES del proyecto LIBERTY:
+ 
+                                      + Directorio: 'src' completo. 
+                                      + Archivo pom.xml    
+                                      
+    * REPOSITORIO PARA CONFIGURACIÓN: El NOMBRE en este caso ha sido: 'dummy-liberty-EASeJ-config' 
+                                      REPOSITORIO para ubicar los ARCHIVOS de CONFIGURACIÓN del proyecto LIBERTY (solo algunos):
+       
+                                      + Directorio 'environments / staging' conteniendo dentro: 
+                                        _ server.xml
+                                        _ environment.yaml   
+
+III. DESDE 'EASeJ' CONECTARSE CON GITHUB, POR MEDIO DE: (ORGANIZACIÓN & REPOSITORIOS).
+ 
+ 
+
+
+
+
+
 
