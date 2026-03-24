@@ -39,6 +39,14 @@
 			<scope>provided</scope>
 		</dependency> 
 		
+		<!--OPEN-TELEMETRY -->
+		<dependency>
+	        <groupId>io.opentelemetry</groupId>
+	        <artifactId>opentelemetry-api</artifactId>
+	        <version>1.32.0</version>
+	        <scope>provided</scope>
+	    </dependency>
+		
 	    <!-- JAXB API -->
 	    <dependency>
 	        <groupId>jakarta.xml.bind</groupId>
