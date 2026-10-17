@@ -11,12 +11,21 @@
 	<packaging>war</packaging>
   
 	<properties>    
-		<maven.compiler.source>8</maven.compiler.source>
-		<maven.compiler.target>8</maven.compiler.target>
+		<maven.compiler.release>21</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
 	</properties>
 
  	<dependencies>
+		<!-- JAKARTA EE 10 (WEB-PROFILE): [JAX-RS 3.1, JSON-B 3.0, CDI 4.0, JAXB 4.0] provistos por LIBERTY -->
+		<dependency>
+			<groupId>jakarta.platform</groupId>
+			<artifactId>jakarta.jakartaee-web-api</artifactId>
+			<version>10.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- MICROPROFILE 6.1 -->
 		<dependency>
 			<groupId>org.eclipse.microprofile</groupId>
 			<artifactId>microprofile</artifactId>
@@ -24,21 +33,7 @@
 			<type>pom</type>
 			<scope>provided</scope>
 		</dependency>
- 
-        <dependency>
-            <groupId>jakarta.ws.rs</groupId>
-            <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>2.1.6</version>
-            <scope>provided</scope>
-        </dependency> 	 
-        
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>8.0</version>
-			<scope>provided</scope>
-		</dependency> 
-		
+
 		<!--OPEN-TELEMETRY -->
 		<dependency>
 	        <groupId>io.opentelemetry</groupId>
@@ -46,20 +41,14 @@
 	        <version>1.32.0</version>
 	        <scope>provided</scope>
 	    </dependency>
-		
-	    <!-- JAXB API -->
+
+	    <!-- JAXB API (Jakarta XML Binding 4.0): implementacion provista por LIBERTY -->
 	    <dependency>
 	        <groupId>jakarta.xml.bind</groupId>
 	        <artifactId>jakarta.xml.bind-api</artifactId>
-	        <version>2.3.3</version>
+	        <version>4.0.2</version>
+	        <scope>provided</scope>
 	    </dependency>
-	
-	    <!-- Implementación de referencia (runtime) -->
-	    <dependency>
-	        <groupId>org.glassfish.jaxb</groupId>
-	        <artifactId>jaxb-runtime</artifactId>
-	        <version>2.3.3</version>
-	    </dependency> 	    
 	</dependencies>    
  
 	<build>
@@ -67,6 +56,12 @@
 		
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.13.0</version>
+				</plugin>
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>

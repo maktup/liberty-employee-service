@@ -1,6 +1,6 @@
 package pe.com.ibm.csm.service;
 
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response;
 
 /**
  * EmployeeService

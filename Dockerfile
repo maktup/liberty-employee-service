@@ -4,7 +4,7 @@
 ########################################################################################################################## 
 
 #STAGE: [CONSTRUCTION]: 
-FROM maven:3.5-jdk-8-slim AS BUILD
+FROM maven:3.9-eclipse-temurin-21 AS BUILD
 WORKDIR /usr/src/app
 COPY pom.xml .
 COPY src ./src
